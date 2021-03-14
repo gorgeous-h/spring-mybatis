@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hello.mapper.UserMapper">
+	<insert id="save" parameterType="User">
+		INSERT INTO Users (FirstName, LastName, Age) VALUES (#{firstName}, #{lastName}, #{age})
+	</insert>
+	
+	<update id="update" parameterType="User">
+		UPDATE Users SET FirstName = #{firstName}, LastName = #{lastName}, Age = #{age} WHERE ID = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM Users WHERE ID = #{id}
+	</delete>
+	
+	<select id="findById" parameterType="int" resultType="User">
+		SELECT ID, FirstName, LastName, Age FROM Users WHERE ID = #{id}
+	</select>
+	
+	<select id="findAll" resultType="User">
+		SELECT ID, FirstName, LastName, Age FROM Users
+	</select>
+</mapper>
