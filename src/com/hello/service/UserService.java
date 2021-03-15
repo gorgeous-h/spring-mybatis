@@ -1,6 +1,7 @@
 package com.hello.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,14 @@ public class UserService {
 
 	public void delete(Integer id) {
 		userMapper.delete(id);
+	}
+
+	public List<User> getUsers(Map<String, Object> params) {
+		return userMapper.getUsers(params);
+	}
+	
+	public long getUsersCount(Map<String, Object> params){
+		return userMapper.getUsersCount(params);
 	}
 	
 }

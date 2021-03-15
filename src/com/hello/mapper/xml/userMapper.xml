@@ -22,4 +22,10 @@
 	<select id="findAll" resultType="User">
 		SELECT ID, FirstName, LastName, Age FROM Users
 	</select>
+	<select id="getUsers" resultType="User">
+		SELECT ID, FirstName, LastName, Age FROM Users LIMIT #{pageNO}, #{pageSize}
+	</select>
+	<select id="getUsersCount" resultType="long">
+		SELECT COUNT(ID) FROM Users
+	</select>
 </mapper>

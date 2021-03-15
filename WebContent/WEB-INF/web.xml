@@ -19,6 +19,22 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
+	<!-- 配置字符编码过滤器 -->
+	<!-- 字符编码过滤器必须配置在所有过滤器的最前面! -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	<!-- 配置可以把 POST 请求转为 PUT、DELETE 请求的 Filter -->
 	<filter>
 		<filter-name>HiddenHttpMethodFilter</filter-name>

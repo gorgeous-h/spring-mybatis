@@ -1,6 +1,10 @@
 package com.hello.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,7 @@ import com.hello.service.UserService;
 
 @Controller
 public class UserController {
+	private static final String SUCCESS = "success";
 	@Autowired
 	private UserService userService;
 	
@@ -54,19 +59,44 @@ public class UserController {
 		return userService.getAllUser();
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/user", method=RequestMethod.POST)
-	public void save(User user){
+	public String save(User user){
 		userService.save(user);
+		return SUCCESS;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/user", method=RequestMethod.PUT)
-	public void update(@ModelAttribute("user") User user){
+	public String update(@ModelAttribute("user") User user){
 		userService.update(user);
+		return SUCCESS;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/user/{id}", method=RequestMethod.DELETE)
-	public void delete(@PathVariable Integer id){
+	public String delete(@PathVariable Integer id){
 		userService.delete(id);
+		return SUCCESS;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getUsers")
+	@SuppressWarnings("serial")
+	public Map<String, Object> getUsers(HttpServletRequest request){
+		int pageNO = Integer.parseInt(request.getParameter("page"));
+		int pageSize = Integer.parseInt(request.getParameter("rows"));
+		Map<String, Object> params = new HashMap<>();
+		params.put("pageNO", (pageNO-1)*pageSize);
+		params.put("pageSize", pageSize);
+		List<User> users = userService.getUsers(params);
+		long count = userService.getUsersCount(params);
+		return new HashMap<String, Object>(){
+			{
+				put("rows", users);
+				put("total", count);
+			}
+		};
 	}
 	
 }
